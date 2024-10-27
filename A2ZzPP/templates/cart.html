@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{%block food%}
+<body>
+    <header>
+        <div class="logo">MyShop</div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Deals</a></li>
+                <li><a href="contact">Contact</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li class="cart-icon">
+                    <a href="#">🛒 {{ans}}:cart</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+<body>
+    <div class="container">
+        <h1>Your Cart</h1>
+        {%for c in no_of_items%}
+        <div class="cart-item">
+            <img src="{{c.product.image.url}}" alt="Product Image">
+            <div class="item-details">
+                <h2>{{c.product.name}}</h2>
+                <p>Price: ${{c.product.price}}</p>
+                
+                <input type="number" value="1" min="1" class="quantity">
+                <a class="btn btn-danger" href="{%url "remove" remove=c.id%}">remove</a>
+            </div>
+        </div>
+    {%endfor%}    
+
+        </div>
+        <div class="total">
+            <h2>Total: Rs:{{v}}</h2>
+            <button class="checkout">Proceed to Checkout</button>
+        </div>
+    </div>
+</body>
+
+
+
+{%endblock%}

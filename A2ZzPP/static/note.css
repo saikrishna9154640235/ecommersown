@@ -1,0 +1,111 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f9fc;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styles */
+header {
+    background-color: #232f3e; /* Amazon-like dark blue */
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Main Container Styles */
+main {
+    padding: 20px;
+}
+
+/* Product Container Styles */
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 -10px; /* Adjusts for card margin */
+}
+
+.product-card {
+    flex: 1 1 calc(25% - 20px); /* Adjusted for Amazon-like layout */
+    margin: 10px; /* Space between cards */
+    border: 1px solid #ddd;
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Adjusted padding */
+    background-color: white; /* Card background */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Removed hover effect */
+    display: flex; /* Use flex to center content */
+    flex-direction: column; /* Align items in a column */
+    align-items: center; /* Center items horizontally */
+}
+
+/* Removed hover transformation */
+/*
+.product-card:hover {
+    transform: scale(1.02); 
+}
+*/
+
+.product-card img {
+    max-width: 100%; /* Full width */
+    height: auto; /* Maintains aspect ratio */
+    display: block; /* Ensures proper spacing */
+}
+
+.product-card h2 {
+    font-size: 1.1em; /* Slightly smaller */
+    margin: 10px 0;
+    font-weight: bold; /* Bold title */
+    text-align: center; /* Center text */
+}
+
+.product-card p {
+    color: #666;
+    font-size: 1em; /* Slightly larger font size */
+    text-align: center; /* Center text */
+}
+
+/* Button Styles */
+button {
+    background-color: #ffa41c; /* Amazon-like orange */
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 14px;
+    width: 100%; /* Full width for button */
+}
+
+button a {
+    color: white;
+    text-decoration: none;
+}
+
+
+
+/* Footer Styles */
+footer {
+    background-color: #232f3e; /* Same as header */
+    color: white; 
+    text-align: center;
+    padding: 10px 0;
+}
