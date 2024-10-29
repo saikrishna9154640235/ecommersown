@@ -31,6 +31,9 @@ urlpatterns = [
   
     path("remove/<remove>",Remove,name="remove"),
     path("cart_items",cart_items,name="cart_items"),
+    path('create-order/', create_order, name='create_order'),
+    path('confirm-order/', confirm_order, name='confirm_order'),
+
 
 
     path("logout",Logout,name="logout"),

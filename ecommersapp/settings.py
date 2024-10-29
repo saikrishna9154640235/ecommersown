@@ -145,3 +145,9 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'golisaikrishnareddy95@gmail.com'
 EMAIL_HOST_PASSWORD = 'xhpr cusp gdgt qusu'
 EMAIL_USE_TLS = True
+
+
+# settings.py
+
+RAZORPAY_KEY_ID = 'rzp_test_YzcnRExZo7F2ET'
+RAZORPAY_KEY_SECRET = 'UAWqUlYLsCzXp1ML4iBUrheq'

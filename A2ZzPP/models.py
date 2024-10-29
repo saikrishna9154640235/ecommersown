@@ -20,6 +20,6 @@ class Cart(models.Model):
 # Create your models here.
 class Cart_item(models.Model):
     cart=models.ForeignKey(Cart,on_delete=models.CASCADE,related_name='cart_items')
-    product=models.ForeignKey(Product,on_delete=models.CASCADE,related_name='cart_items')    
+    product=models.ForeignKey(Product,on_delete=models.CASCADE,related_name='cart_items',null=True,blank=True)    
     
     

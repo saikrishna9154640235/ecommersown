@@ -1,28 +1,28 @@
+<!-- cart.html -->
+
 {% extends "base.html" %}
-{%block food%}
+{% block food %}
 <body>
     <header>
         <div class="logo">MyShop</div>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="#">Products</a></li>
                 <li><a href="#">Deals</a></li>
                 <li><a href="contact">Contact</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
                 <li class="cart-icon">
-                    <a href="#">🛒 {{vamo}}:cart</a>
+                    <a href="#">🛒 {{vamo}}: cart</a>
                 </li>
             </ul>
             <form method="GET" class="search-form">
                 <input type="text" name="search" placeholder="Search" aria-label="Search">
                 <button type="submit">Search</button>
-              </form>
+            </form>
         </nav>
-
     </header>
 
-<body>
     <div class="container">
         <h1>Your Cart</h1>
         {% for c in cart.cart_items.all %}
@@ -30,22 +30,81 @@
             <img src="{{c.product.image.url}}" alt="Product Image">
             <div class="item-details">
                 <h2>{{c.product.name}}</h2>
-                <p>Price: ${{c.product.price}}</p>
-                
+                <p>Price: ₹{{c.product.price}}</p>
                 <input type="number" value="1" min="1" class="quantity">
-                <a class="btn btn-danger" href="{%url "remove" remove=c.id%}">remove</a>
+                <a class="btn btn-danger" href="{% url 'remove' remove=c.id %}">Remove</a>
             </div>
         </div>
-    {%endfor%}    
-
-        </div>
+        {% endfor %}
         <div class="total">
-            <h2>Total: Rs:{{v}}</h2>
-            <button class="checkout">Proceed to Checkout</button>
+            <h2>Total: ₹{{ total_cost.total_cost }}</h2>
+            <button id="rzp-button1">Proceed to Checkout</button>
         </div>
-    </div>
-</body>
-
-
-
+        </body>
+        
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script>
+            const csrfToken = '{{ csrf_token }}'; // Get CSRF token from Django template
+            document.getElementById('rzp-button1').onclick = function(e) {
+                e.preventDefault();
+        
+                fetch('/create-order/', {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken  // Include CSRF token here
+                    },
+                    body: JSON.stringify({})
+                })
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(function(data) {
+                    var options = {
+                        "key": "{{ rzp_test_YzcnRExZo7F2ET }}", // Use your Razorpay key ID
+                        "amount": data.amount, // Amount in paise
+                        "currency": "INR",
+                        "name": "Your Business Name",
+                        "description": "Purchase Description",
+                        "order_id": data.id, // Set this dynamically
+                        "handler": function (response) {
+                            alert("Payment ID: " + response.razorpay_payment_id);
+        
+                            // Send payment ID to your Django view to process the order
+                            fetch('/confirm-order/', {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRFToken': csrfToken, // Include CSRF token
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    payment_id: response.razorpay_payment_id
+                                })
+                            })
+                            .then(function(res) {
+                                return res.json();
+                            })
+                            .then(function(data) {
+                                if (data.success) {
+                                    alert("Order confirmed! Your cart has been emptied.");
+                                    // Optionally, redirect to a success page or refresh the cart view
+                                } else {
+                                    alert("Error confirming order: " + data.error);
+                                }
+                            });
+                        }
+                    };
+                    var rzp1 = new Razorpay(options);
+                    rzp1.open();
+                })
+                .catch(function(error) {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+            };
+        </script>
+        
 {%endblock%}
