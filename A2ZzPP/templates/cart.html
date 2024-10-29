@@ -11,16 +11,21 @@
                 <li><a href="contact">Contact</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
                 <li class="cart-icon">
-                    <a href="#">🛒 {{ans}}:cart</a>
+                    <a href="#">🛒 {{vamo}}:cart</a>
                 </li>
             </ul>
+            <form method="GET" class="search-form">
+                <input type="text" name="search" placeholder="Search" aria-label="Search">
+                <button type="submit">Search</button>
+              </form>
         </nav>
+
     </header>
 
 <body>
     <div class="container">
         <h1>Your Cart</h1>
-        {%for c in no_of_items%}
+        {% for c in cart.cart_items.all %}
         <div class="cart-item">
             <img src="{{c.product.image.url}}" alt="Product Image">
             <div class="item-details">

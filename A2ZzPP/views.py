@@ -5,16 +5,18 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 
 # Create your views here.
-@login_required
+@login_required(login_url='/login')
 def Home(request):
     products=Product.objects.all()
-    cart_item=Cart_item.objects.all()
-    ans=0
-    for c in cart_item:
-        ans+=1
-    
+    cart=Cart.objects.filter(is_paid=False,user=request.user).first()
+    vamo=cart.cart_items.count()
+    print(vamo)
+
+    if request.GET.get('search'):
+        search=request.GET.get('search')
+        products=Product.objects.filter(name__icontains=search)
  
-    return render(request,"home.html",{"products":products,"ans":ans})
+    return render(request,"home.html",{"products":products,"vamo":vamo})
 def Contact(request):
     return render(request,"contact.html")
 
@@ -25,6 +27,7 @@ def More_details(request,id):
 
 from django.shortcuts import get_object_or_404, redirect
 from .models import Product, Cart, Cart_item
+@login_required(login_url='/login')
 
 def cart(request, pro_id):
     user = request.user
@@ -37,18 +40,18 @@ def cart(request, pro_id):
     return redirect("home")
 
 from django.db.models import Sum
-def cart_items(request):
-    no_of_items=Cart_item.objects.all()
+@login_required(login_url='/login')
 
-    suming=Cart_item.objects.aggregate(sumings=Sum("product__price"))
-    s=suming
-    v=s['sumings']
-    return render(request,'cart.html',{"no_of_items":no_of_items,"suming":suming,"v":v})
+def cart_items(request):
+    cart=Cart.objects.filter(is_paid=False,user=request.user).first()
+    vamo=cart.cart_items.count()
+    print(vamo)
+    return render(request,'cart.html',{"cart":cart,"vamo":vamo})
 
 def Remove(request,remove):
     removes=Cart_item.objects.get(id=remove).delete()
     return redirect("cart_items")
     
     
-    
+
     

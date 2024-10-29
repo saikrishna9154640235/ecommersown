@@ -7,21 +7,30 @@ body {
 }
 
 /* Header Styles */
+/* Header Styles */
 header {
     background-color: #232f3e; /* Amazon-like dark blue */
     color: white;
     padding: 15px 20px;
-    text-align: center;
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Space between logo and nav items */
+}
+
+nav {
+    display: flex; /* Ensure nav is also a flex container */
+    align-items: center; /* Center nav items vertically */
 }
 
 nav ul {
     list-style-type: none;
     padding: 0;
+    margin: 0; /* Reset margin for ul */
+    display: flex; /* Flexbox for horizontal alignment */
 }
 
 nav ul li {
-    display: inline;
-    margin: 0 15px;
+    margin: 0 15px; /* Space between nav items */
 }
 
 nav a {
@@ -30,11 +39,45 @@ nav a {
     font-weight: bold;
 }
 
-/* Main Container Styles */
-main {
-    padding: 20px;
-}
+/* Search Form Styles */
+.search-form {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-form input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+   
+    height:39px;
+    
+  }
+  .search-form button:hover {
+    background-color: #e0b041; /* Adjust the hover color as needed */
+    cursor: pointer;
+  }
+  
+  .search-form button {
+    padding: 10px 15px;
+    background-color: #f0c14b;
+    border: none;
+    border-radius: 5px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height:39px;
 
+  }
+  
+  .search-form button:hover {
+    background-color: #e0b041;
+  }
 /* Product Container Styles */
 .product-container {
     display: flex;
