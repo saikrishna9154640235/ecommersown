@@ -129,3 +129,11 @@ def confirm_order(request):
         return JsonResponse({'success': True})
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
+@login_required
+def ispaid(request):
+    user = request.user
+    name=user.username
+    paid_carts = Cart.objects.filter(is_paid=True, user=user)
+
+    return render(request, "orders.html", {
+        "paid_carts": paid_carts,"name":name})
