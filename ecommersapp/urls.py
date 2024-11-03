@@ -37,6 +37,7 @@ urlpatterns = [
 
 
     path("logout",Logout,name="logout"),
+    path("ispaid",ispaid,name="ispaid")
     
     
 
