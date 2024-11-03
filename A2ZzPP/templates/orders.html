@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block food %}
+<h1>{{ name }}, your order was placed successfully!</h1>
+<p>Your order will be delivered within 3 days. We will notify you when the product is out for delivery. If you have any questions, please contact our agent. Thank you for ordering!</p>
+
+<div class="order-container">
+    {% if paid_carts %}
+        {% for cart in paid_carts %}
+            {% for item in cart.cart_items.all %}
+                <div class="order-card">
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="product-image">
+                    <div class="product-info">
+                        <h2 class="product-title">{{ item.product.name }}</h2>
+                        <p class="product-price">₹{{ item.product.price }}</p>
+                        <p class="order-status">Quantity: {{ item.quantity }}</p>
+                    </div>
+                    <button class="order-button">Track Order</button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% else %}
+        <p>No paid items found.</p>
+    {% endif %}
+</div>
+{% endblock %}
